@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projets 3A — Mention ICE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Mise en page : une colonne de sujets, et un panneau « Mes vœux » qui reste
+   visible à droite (au-dessus des sujets sur téléphone). */
+:root {
+  --fond: #f5f3f6;
+  --surface: #ffffff;
+  --encre: #1c1722;
+  --encre-2: #5f5a6b;
+  --trait: #dedae3;
+  --accent: #86144f;
+  --accent-doux: #f4e4ec;
+  --sur-accent: #ffffff;
+  --v1: #86144f;
+  --v2: #706a7f;
+  --v3: #cbc7d3;
+  --ok: #14724a;
+  --ok-doux: #e0f3ea;
+  --alerte: #a8321f;
+  --alerte-doux: #fbe9e5;
+  --titre: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --texte: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #141117;
+    --surface: #1e1a23;
+    --encre: #eeeaf2;
+    --encre-2: #a59fb3;
+    --trait: #352f3d;
+    --accent: #e58bb8;
+    --accent-doux: #3a1c2c;
+    --sur-accent: #141117;
+    --v1: #e58bb8;
+    --v2: #8f88a0;
+    --v3: #4a4456;
+    --ok: #6fd3a3;
+    --ok-doux: #17322a;
+    --alerte: #ff9c8a;
+    --alerte-doux: #3a1f1b;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font: 400 17px/1.55 var(--texte);
+}
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: 20px;
+  padding-block: 40px 80px;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* En-tête */
+.entete { display: grid; gap: 10px; margin-bottom: 32px; }
+.surtitre {
+  font: 500 13px/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--encre-2);
+}
+h1 {
+  font: 700 clamp(32px, 5vw, 48px)/1.05 var(--titre);
+  letter-spacing: -.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.chapo { max-width: 62ch; color: var(--encre-2); margin: 0; }
+
+/* Grille principale */
+.grille { display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  .grille { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; }
+  .panneau { position: sticky; top: 20px; order: 2; }
+}
+
+/* Panneau des vœux */
+.panneau {
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-radius: 10px;
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+.panneau h2 { font: 700 20px/1.2 var(--titre); margin: 0; }
+.aide { font-size: 15px; color: var(--encre-2); margin: 0; }
+.champs { display: grid; gap: 12px; }
+.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+label { display: grid; gap: 4px; font-size: 14px; font-weight: 600; min-width: 0; }
+input, select {
+  font: 400 16px/1.3 var(--texte);
+  color: var(--encre);
+  background: var(--fond);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+  padding: 9px 10px;
+  width: 100%;
+  min-width: 0;
+}
+select { text-overflow: ellipsis; }
+.rang {
+  font: 500 12px/1 var(--mono);
+  display: inline-grid; place-items: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  margin-right: 6px;
+}
+.rang.r1 { background: var(--v1); color: var(--sur-accent); }
+.rang.r2 { background: var(--v2); color: var(--sur-accent); }
+.rang.r3 { background: var(--v3); color: var(--encre); }
+.envoyer {
+  font: 600 16px/1 var(--texte);
+  background: var(--accent);
+  color: var(--sur-accent);
+  border: 0;
+  border-radius: 6px;
+  padding: 13px 16px;
+  cursor: pointer;
+}
+.envoyer:disabled { opacity: .45; cursor: not-allowed; }
+.message { font-size: 15px; border-radius: 6px; padding: 10px 12px; margin: 0; }
+.message.ok { background: var(--ok-doux); color: var(--ok); }
+.message.erreur { background: var(--alerte-doux); color: var(--alerte); }
+.message.info { background: var(--accent-doux); color: var(--encre); }
+.regles { margin: 0; padding-left: 18px; font-size: 14px; color: var(--encre-2); display: grid; gap: 4px; }
+
+/* Sujets */
+.barre { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.barre h2 { font: 700 22px/1.2 var(--titre); margin: 0; }
+.etat { font: 500 13px/1.4 var(--mono); color: var(--encre-2); }
+.legende { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--encre-2); margin-bottom: 14px; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.pastille { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.sujets { display: grid; gap: 14px; list-style: none; margin: 0; padding: 0; }
+.sujet {
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-radius: 10px;
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+.sujet.choisi { border-color: var(--accent); }
+.sujet h3 { font: 700 20px/1.25 var(--titre); margin: 0; text-wrap: balance; }
+.encadrant { font-size: 15px; color: var(--encre-2); margin: 0; overflow-wrap: anywhere; }
+.resume { margin: 0; max-width: 65ch; }
+.mots { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.mots li { font-size: 13px; color: var(--encre-2); border: 1px solid var(--trait); border-radius: 99px; padding: 2px 10px; }
+details summary { cursor: pointer; font-weight: 600; font-size: 15px; color: var(--accent); width: fit-content; }
+details p { margin: 12px 0 0; max-width: 65ch; }
+.pied { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; border-top: 1px solid var(--trait); padding-top: 14px; }
+
+/* Demande : barre empilée des vœux 1, 2, 3 */
+.demande { display: grid; gap: 6px; flex: 1 1 220px; min-width: 0; }
+.piste { display: flex; height: 10px; border-radius: 3px; overflow: hidden; background: var(--fond); }
+.piste i { display: block; height: 100%; }
+.piste .b1 { background: var(--v1); }
+.piste .b2 { background: var(--v2); }
+.piste .b3 { background: var(--v3); }
+.chiffres { font: 500 13px/1.3 var(--mono); color: var(--encre-2); font-variant-numeric: tabular-nums; }
+
+/* Choix du rang sur la carte */
+.choix { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--encre-2); }
+.choix button {
+  font: 500 14px/1 var(--mono);
+  width: 38px; height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--trait);
+  background: var(--surface);
+  color: var(--encre);
+  cursor: pointer;
+}
+.choix button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--sur-accent); }
+.choix button:disabled { opacity: .45; cursor: not-allowed; }
+
+footer { margin-top: 40px; font-size: 14px; color: var(--encre-2); }
+@media (max-width: 420px) { .deux { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="entete">
+    <div class="surtitre" id="surtitre"></div>
+    <h1 id="titre"></h1>
+    <p class="chapo">Lisez les sujets, puis indiquez vos trois vœux par ordre de préférence. Les compteurs montrent la demande sur chaque sujet, sans aucun nom.</p>
+  </header>
+
+  <div class="grille">
+
+    <form class="panneau" id="formulaire" novalidate>
+      <h2>Mes vœux</h2>
+      <p class="aide" id="echeance"></p>
+      <div class="champs">
+        <div class="deux">
+          <label for="prenom">Prénom<input id="prenom" name="prenom" autocomplete="given-name" maxlength="60" required></label>
+          <label for="nom">Nom<input id="nom" name="nom" autocomplete="family-name" maxlength="60" required></label>
+        </div>
+        <label for="v1"><span><span class="rang r1">1</span>Premier vœu</span><select id="v1" required></select></label>
+        <label for="v2"><span><span class="rang r2">2</span>Deuxième vœu</span><select id="v2" required></select></label>
+        <label for="v3"><span><span class="rang r3">3</span>Troisième vœu</span><select id="v3" required></select></label>
+      </div>
+      <button class="envoyer" id="envoyer" type="submit">Enregistrer mes vœux</button>
+      <p class="message" id="message" role="status" hidden></p>
+      <ul class="regles">
+        <li>Chacun enregistre ses propres vœux. Pour un binôme, mettez-vous d'accord sur les mêmes sujets et signalez votre binôme au responsable.</li>
+        <li>Vous pouvez modifier vos vœux jusqu'à la clôture : renvoyez le formulaire avec les mêmes prénom et nom.</li>
+        <li>Vos vœux nominatifs ne sont visibles que par le responsable de la mention.</li>
+      </ul>
+    </form>
+
+    <section aria-labelledby="t-sujets">
+      <div class="barre">
+        <h2 id="t-sujets">Sujets proposés</h2>
+        <div class="etat" id="etat" aria-live="polite"></div>
+      </div>
+      <div class="legende" id="legende" hidden>
+        <span><i class="pastille" style="background:var(--v1)"></i>vœu 1</span>
+        <span><i class="pastille" style="background:var(--v2)"></i>vœu 2</span>
+        <span><i class="pastille" style="background:var(--v3)"></i>vœu 3</span>
+      </div>
+      <ol class="sujets" id="sujets"></ol>
+    </section>
+
+  </div>
+
+  <footer id="pied"></footer>
+</div>
+
+<script src="projets.js"></script>
+<script>
+(function () {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const ouvert = Boolean(CONFIG.scriptUrl);
+  const choix = { 1: "", 2: "", 3: "" };   // rang -> id du sujet
+  let compteurs = null;                    // id -> [n1, n2, n3], null tant que non chargé
+  let ferme = false;
+
+  /* ---------- En-tête ---------- */
+  $("surtitre").textContent = CONFIG.mention + " · " + CONFIG.annee;
+  $("titre").textContent = CONFIG.titre;
+  document.title = CONFIG.titre + " — " + CONFIG.mention;
+  const pied = $("pied");
+  pied.textContent = "Responsable : " + CONFIG.responsable + " · ";
+  const lien = document.createElement("a");
+  lien.href = "mailto:" + CONFIG.contact;
+  lien.textContent = CONFIG.contact;
+  pied.appendChild(lien);
+
+  /* ---------- Petits outils ---------- */
+  function el(balise, classe, texte) {
+    const e = document.createElement(balise);
+    if (classe) e.className = classe;
+    if (texte != null) e.textContent = texte;
+    return e;
+  }
+  function memoire(cle, valeur) {
+    try {
+      if (valeur === undefined) return localStorage.getItem(cle);
+      localStorage.setItem(cle, valeur);
+    } catch (e) { /* stockage indisponible : sans conséquence */ }
+    return null;
+  }
+  function dire(type, texte) {
+    const m = $("message");
+    m.className = "message " + type;
+    m.textContent = texte;
+    m.hidden = false;
+  }
+
+  /* ---------- Listes déroulantes ---------- */
+  [1, 2, 3].forEach((r) => {
+    const s = $("v" + r);
+    s.appendChild(new Option("Choisir un sujet…", ""));
+    PROJETS.forEach((p, i) => s.appendChild(new Option((i + 1) + ". " + p.titre, p.id)));
+    s.addEventListener("change", () => fixer(r, s.value));
+  });
+
+  /* Attribue un rang à un sujet ; un sujet ne peut occuper qu'un seul rang. */
+  function fixer(rang, id) {
+    if (id) [1, 2, 3].forEach((r) => { if (r !== rang && choix[r] === id) choix[r] = ""; });
+    choix[rang] = id;
+    memoire("ice-voeux", JSON.stringify(choix));
+    refleter();
+  }
+  function refleter() {
+    [1, 2, 3].forEach((r) => { $("v" + r).value = choix[r]; });
+    document.querySelectorAll(".sujet").forEach((carte) => {
+      const id = carte.dataset.id;
+      let pris = false;
+      carte.querySelectorAll(".choix button").forEach((b) => {
+        const actif = choix[b.dataset.rang] === id;
+        b.setAttribute("aria-pressed", actif ? "true" : "false");
+        if (actif) pris = true;
+      });
+      carte.classList.toggle("choisi", pris);
+    });
+  }
+
+  /* ---------- Cartes des sujets ---------- */
+  const liste = $("sujets");
+  PROJETS.forEach((p, i) => {
+    const carte = el("li", "sujet");
+    carte.dataset.id = p.id;
+
+    carte.appendChild(el("div", "surtitre", "Sujet " + (i + 1)));
+    carte.appendChild(el("h3", "", p.titre));
+
+    const enc = el("p", "encadrant", "Encadrement : " + p.encadrant);
+    if (p.email) {
+      enc.appendChild(document.createTextNode(" · "));
+      const a = el("a", "", p.email);
+      a.href = "mailto:" + p.email;
+      enc.appendChild(a);
+    }
+    carte.appendChild(enc);
+    carte.appendChild(el("p", "resume", p.resume));
+
+    if (p.mots && p.mots.length) {
+      const mots = el("ul", "mots");
+      p.mots.forEach((m) => mots.appendChild(el("li", "", m)));
+      carte.appendChild(mots);
+    }
+
+    const det = el("details");
+    det.appendChild(el("summary", "", "Lire le descriptif"));
+    (p.texte || []).forEach((t) => det.appendChild(el("p", "", t)));
+    if (p.pdf) {
+      const par = el("p");
+      const a = el("a", "", "Sujet complet et bibliographie (PDF)");
+      a.href = p.pdf;
+      a.target = "_blank";
+      a.rel = "noopener";
+      par.appendChild(a);
+      det.appendChild(par);
+    }
+    carte.appendChild(det);
+
+    const bas = el("div", "pied");
+    const dem = el("div", "demande");
+    dem.hidden = true;
+    const piste = el("div", "piste");
+    ["b1", "b2", "b3"].forEach((c) => piste.appendChild(el("i", c)));
+    dem.appendChild(piste);
+    dem.appendChild(el("div", "chiffres"));
+    bas.appendChild(dem);
+
+    const zone = el("div", "choix");
+    zone.appendChild(el("span", "", "Mon vœu"));
+    [1, 2, 3].forEach((r) => {
+      const b = el("button", "", String(r));
+      b.type = "button";
+      b.dataset.rang = r;
+      b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", "Mettre ce sujet en vœu " + r);
+      b.addEventListener("click", () => fixer(r, choix[r] === p.id ? "" : p.id));
+      zone.appendChild(b);
+    });
+    bas.appendChild(zone);
+    carte.appendChild(bas);
+    liste.appendChild(carte);
+  });
+
+  /* ---------- Compteurs anonymes ---------- */
+  function peindre(etat) {
+    compteurs = etat.compteurs || {};
+    ferme = Boolean(etat.ferme);
+    const totaux = PROJETS.map((p) => (compteurs[p.id] || [0, 0, 0]).reduce((a, b) => a + b, 0));
+    const max = Math.max(1, ...totaux);
+
+    document.querySelectorAll(".sujet").forEach((carte) => {
+      const c = compteurs[carte.dataset.id] || [0, 0, 0];
+      const dem = carte.querySelector(".demande");
+      dem.hidden = false;
+      dem.querySelectorAll(".piste i").forEach((b, k) => { b.style.width = (100 * c[k] / max) + "%"; });
+      dem.querySelector(".chiffres").textContent =
+        "vœu 1 : " + c[0] + " · vœu 2 : " + c[1] + " · vœu 3 : " + c[2];
+      dem.querySelector(".piste").setAttribute("aria-hidden", "true");
+    });
+    $("legende").hidden = false;
+
+    const n = etat.votants || 0;
+    $("etat").textContent = n + (n > 1 ? " étudiants ont" : " étudiant a") + " enregistré des vœux";
+
+    if (etat.cloture) {
+      const d = new Date(etat.cloture);
+      const quand = d.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+      $("echeance").textContent = ferme ? "Les vœux sont clos depuis le " + quand + "." : "Clôture des vœux : " + quand + ".";
+    } else {
+      $("echeance").textContent = "Les vœux sont ouverts.";
+    }
+    verrouiller(ferme);
+  }
+
+  function verrouiller(bloque) {
+    document.querySelectorAll("#formulaire input, #formulaire select, #envoyer, .choix button")
+      .forEach((c) => { c.disabled = bloque; });
+  }
+
+  async function charger() {
+    try {
+      const r = await fetch(CONFIG.scriptUrl, { cache: "no-store" });
+      peindre(await r.json());
+    } catch (e) {
+      $("etat").textContent = "Compteurs indisponibles pour le moment";
+    }
+  }
+
+  /* ---------- Envoi ---------- */
+  const ERREURS = {
+    cloture: "Les vœux sont clos. Contactez le responsable pour toute modification.",
+    nom: "Indiquez votre prénom et votre nom.",
+    voeux: "Choisissez trois sujets.",
+    doublon: "Vos trois vœux doivent porter sur trois sujets différents.",
+    format: "L'envoi n'a pas pu être lu. Rechargez la page et réessayez."
+  };
+
+  $("formulaire").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const prenom = $("prenom").value.trim();
+    const nom = $("nom").value.trim();
+    if (!prenom || !nom) return dire("erreur", ERREURS.nom);
+    if (!choix[1] || !choix[2] || !choix[3]) return dire("erreur", ERREURS.voeux);
+
+    const bouton = $("envoyer");
+    bouton.disabled = true;
+    bouton.textContent = "Enregistrement…";
+    try {
+      const r = await fetch(CONFIG.scriptUrl, {
+        method: "POST",
+        // text/plain évite la requête préliminaire CORS, que Apps Script ne gère pas
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ prenom, nom, v1: choix[1], v2: choix[2], v3: choix[3] })
+      });
+      const rep = await r.json();
+      if (rep.compteurs) peindre(rep);
+      if (rep.ok) {
+        memoire("ice-prenom", prenom);
+        memoire("ice-nom", nom);
+        dire("ok", rep.remplace
+          ? "Vos vœux ont été mis à jour. Ils remplacent les précédents."
+          : "Vos vœux sont enregistrés. Vous pouvez les modifier jusqu'à la clôture.");
+      } else {
+        dire("erreur", ERREURS[rep.erreur] || "L'enregistrement a échoué. Réessayez.");
+      }
+    } catch (e) {
+      dire("erreur", "Connexion impossible : vos vœux n'ont pas été enregistrés. Réessayez dans un instant.");
+    } finally {
+      bouton.textContent = "Enregistrer mes vœux";
+      bouton.disabled = ferme;
+    }
+  });
+
+  /* ---------- Démarrage ---------- */
+  $("prenom").value = memoire("ice-prenom") || "";
+  $("nom").value = memoire("ice-nom") || "";
+  try {
+    const ancien = JSON.parse(memoire("ice-voeux") || "{}");
+    [1, 2, 3].forEach((r) => {
+      if (PROJETS.some((p) => p.id === ancien[r])) choix[r] = ancien[r];
+    });
+  } catch (e) { /* rien à restaurer */ }
+  refleter();
+
+  if (ouvert) {
+    $("echeance").textContent = "Chargement…";
+    charger();
+    setInterval(() => { if (!document.hidden) charger(); }, 60000);
+  } else {
+    $("echeance").textContent = "Les vœux ne sont pas encore ouverts.";
+    $("etat").textContent = PROJETS.length + " sujets";
+    verrouiller(true);
+  }
+})();
+</script>
+</body>
+</html>
