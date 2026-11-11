@@ -69,6 +69,13 @@ a { color: var(--accent); }
 
 /* En-tête */
 .entete { display: grid; gap: 10px; margin-bottom: 32px; }
+.logo-ice { justify-self: start; display: block; line-height: 0; margin-bottom: 14px; border-radius: 6px; }
+.logo-ice svg { display: block; height: 46px; width: auto; }
+.logo-ice .l-encre { stroke: var(--encre); }
+.logo-ice .l-accent { stroke: var(--accent); }
+.logo-ice .l-gris { stroke: var(--v2); }
+.logo-ice circle.l-encre { fill: var(--encre); stroke: none; }
+.logo-ice circle.l-accent { fill: var(--accent); stroke: none; }
 .surtitre {
   font: 500 13px/1 var(--mono);
   letter-spacing: .08em;
@@ -197,6 +204,17 @@ footer { margin-top: 40px; font-size: 14px; color: var(--encre-2); }
 <div class="page">
 
   <header class="entete">
+    <a class="logo-ice" href="https://mention-ice.github.io/" aria-label="Mention ICE, Information &amp; Communication Engineering : page d'accueil">
+      <svg viewBox="226 116 444 230" fill="none" stroke-linecap="round" aria-hidden="true">
+        <circle class="l-accent" cx="253.5" cy="142.5" r="22.5"/>
+        <path class="l-encre" d="M253.5 207V315" stroke-width="42"/>
+        <path class="l-accent" d="M487.1 161.2A92 92 0 1 0 487.1 302.2" stroke-width="36"/>
+        <path class="l-gris" d="M454.2 198.2A42.5 42.5 0 1 0 454.2 265.2" stroke-width="19"/>
+        <circle class="l-encre" cx="428" cy="231.7" r="11"/>
+        <path class="l-encre" d="M573.3 146H645.7M573.3 317.5H645.7" stroke-width="38.5"/>
+        <path class="l-gris" d="M573.3 232H608.7" stroke-width="38.5"/>
+      </svg>
+    </a>
     <div class="surtitre" id="surtitre"></div>
     <h1 id="titre"></h1>
     <p class="chapo">Lisez les sujets, puis indiquez vos trois vœux par ordre de préférence. Les compteurs montrent la demande sur chaque sujet, sans aucun nom.</p>
